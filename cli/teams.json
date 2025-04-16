@@ -1,0 +1,49 @@
+[
+    {
+        "name": "Backend",
+        "description": "Handles APIs",
+        "members": [
+            {
+                "name": "Alice",
+                "email": "alice@example.com",
+                "role": "Developer",
+                "team": "Backend"
+            },
+            {
+                "name": "Dhiraj",
+                "email": "alice@example.com",
+                "role": "Developer",
+                "team": "Backend"
+            }
+        ]
+    },
+    {
+        "name": "Backend",
+        "description": "Handles APIs",
+        "members": [
+            {
+                "name": "Alice",
+                "email": "alice@example.com",
+                "role": "Developer",
+                "team": "Backend2"
+            }
+        ]
+    },
+    {
+        "name": "Backend3",
+        "description": "Handles APIs",
+        "members": [
+            {
+                "name": "Alice",
+                "email": "alice@example.com",
+                "role": "Developer",
+                "team": "Backend3"
+            }
+        ]
+    },
+    {
+        "name": "Backend",
+        "description": "Handles APIs",
+        "members": []
+    }
+]
