@@ -40,7 +40,6 @@ def add_team(name,description):
 def list_teams():
     if not teams:
         click.echo("No teams are added!")
-        return
     else:
         for team in teams:
             temp = []
