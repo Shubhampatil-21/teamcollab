@@ -17,6 +17,8 @@ members = [{"name":"Alice",
               "role":'Developer',
               "team":'Backend',
               }]
+def func():
+    pass
 
 @click.group()
 def cli():
