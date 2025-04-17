@@ -1,6 +1,5 @@
-import click
+import click, json
 from tabulate import tabulate
-import json
 
 with open("teams.json","r") as teams_data:
     teams = json.load(teams_data)
@@ -15,11 +14,11 @@ def cli():
 @cli.command()
 @click.option('--name',help="You have to mention team name")
 @click.option('--description', help="You have to write description")
-def add_team(name,description):
+def add_team(name, description):
     team = {
-        "name":name,
-        "description":description,
-        "members": [],
+        "name" : name,
+        "description" : description,
+        "members" : [],
     }
     teams.append(team)
     with open("teams.json", "w") as file:
@@ -29,13 +28,10 @@ def add_team(name,description):
 #List all teams
 @cli.command()
 def list_teams():
-    temp = []
     if not teams:
         click.echo("No teams are added!")
     else:
-        for team in teams:
-            temp.append([team["name"]])
-        click.echo(tabulate(temp,headers=["Team name"]))
+        click.echo(tabulate([[team["name"]] for team in teams],headers=["Team name"]))
 
 #Add member to an existing team       
 @cli.command()
@@ -44,19 +40,19 @@ def list_teams():
 @click.option('--role')
 @click.option('--team')
 def add_member(name, email, role, team):
-    member = {"name":name,
-              "email":email,
-              "role":role,
-              "team":team,
+    member = {"name" : name,
+              "email" : email,
+              "role" : role,
+              "team" : team,
               }
     members.append(member)
     with open("members.json", "w") as file:
         json.dump(members, file, indent=4)
     
-    for t_team in teams:
-        if t_team["name"] == team:
-            t_team["members"].append(member)
-            click.echo(f'Member {name} is added to the team {team}')
+    updated = any([t_team["members"].append(member) for t_team in teams if t_team["name"] == team])
+    if updated:
+        click.echo(f'Member {name} is added to the team {team}')
+
     with open("teams.json", "w") as file:
         json.dump(teams, file, indent=4)
 
@@ -65,7 +61,7 @@ def add_member(name, email, role, team):
 @click.option('--team',default = None)
 @click.option('--role',default = None)
 @click.option('--name',default = None)
-def list_members(team,role, name):
+def list_members(team, role, name):
     filtered = []
     if team:
         for t_mem in members:
@@ -86,8 +82,7 @@ def list_members(team,role, name):
         table_data = []
         for data in filtered:
             table_data.append([data["name"], data["email"], data["role"], data["team"]])
-        click.echo(tabulate(table_data,headers=["Name", "Email", "Role", "Team"]))
-
+        click.echo(tabulate(table_data, headers=["Name", "Email", "Role", "Team"]))
 
 if __name__ == '__main__':
     cli()
